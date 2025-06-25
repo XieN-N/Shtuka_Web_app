@@ -1,0 +1,28 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html/
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+
+  db:
+    image: mariadb:10.6
+    restart: always
+    environment:
+      MARIADB_DATABASE: first
+      MARIADB_ROOT_PASSWORD: 1
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db_data:
